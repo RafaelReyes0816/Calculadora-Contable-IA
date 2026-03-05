@@ -57,6 +57,11 @@ def predecir_cuenta(descripcion):
     clase_idx = np.argmax(probas)
     cuenta = modelo_ia.classes_[clase_idx]
     confianza = probas[clase_idx] * 100
+    
+    # Umbral de duda de la Inteligencia Artificial (40%)
+    if confianza < 40.0:
+        cuenta = "Sugerencia Desconocida - Requiere Revisión Humana"
+        
     return cuenta, confianza
 
 # FUNCIONES CONTABLES
