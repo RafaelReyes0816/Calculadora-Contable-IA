@@ -11,163 +11,41 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
-# =============================================================================
 # DATASET Y ENTRENAMIENTO DEL MODELO IA
-# =============================================================================
-data = {
-    'descripcion': [
-        'Compra de papel bond para oficina', 'Compra de libros contables', 'Compra de material de escritorio',
-        'Compra de bolígrafos y carpetas', 'Compra de grapas y engargolados', 'Compra de sobres y etiquetas',
-        'Adquisición de computadoras laptop', 'Adquisición de impresora', 'Compra de celular para gerente',
-        'Compra de monitor pantalla', 'Compra de teclado y mouse', 'Compra de disco duro externo',
-        'Pago de servicios de internet', 'Pago de agua y luz', 'Pago de teléfono', 'Pago de energía eléctrica',
-        'Pago de servicio de agua potable', 'Compra de útiles de limpieza', 'Compra de jabón y desinfectante',
-        'Compra de escobas y trapeadores', 'Compra de papel higiénico', 'Adquisición de mobiliario de oficina',
-        'Compra de escritorio', 'Compra de sillas', 'Compra de archiveros metálicos', 'Compra de estantes',
-        'Compra de mercadería para reventa', 'Compra de productos para venta', 'Compra de inventario',
-        'Compra de repuestos para vehículos', 'Pago de gasolina vehículos', 'Compra de aceite para motor',
-        'Mantenimiento de flota vehicular', 'Servicio de asesoría legal', 'Pago de honorarios abogado',
-        'Servicio de consultoría contable', 'Pago de auditoría externa', 'Compra de alimentos para personal',
-        'Compra de carne para asado', 'Compra de almuerzos para empleados', 'Compra de refrigerios para reunión',
-        'Pago de viáticos alimentación', 'Compra de tornillos y herramientas', 'Compra de martillo y destornilladores',
-        'Compra de equipo de seguridad', 'Pago de alquiler de local', 'Pago de renta de oficina', 'Alquiler de bodega',
-        'Venta de productos terminados', 'Venta de mercadería al contado', 'Prestación de servicios profesionales',
-        'Venta de maquinaria usada', 'Venta de servicios', 'Facturación de servicios', 'Pago de gasolina vehículos',
-        'Compra de diesel para flota', 'Carga de combustible', 'Pago de seguros', 'Gastos de representación',
-        'Comisiones bancarias', 'Pago de licencias de software',
-        'Compra de televisor LED', 'Compra de pantalla smart TV', 'Adquisición de televisor 4K',
-        'Compra de proyector', 'Adquisición de cañonera',
-        'Compra de refrigerador', 'Adquisición de nevera',
-        'Compra de microondas', 'Compra de licuadora',
-        'Servicio de hosting web', 'Pago de dominio internet',
-        'Compra de cámara fotográfica', 'Adquisición de webcam',
-        'Pago de pasajes', 'Compra de boletos aéreos',
-        'Compra de impresora 3D', 'Adquisición de plotter',
-        # Nuevos: Hogar / Muebles
-        'Compra de cama matrimonial', 'Adquisición de sofá para sala',
-        'Compra de comedor de madera', 'Adquisición de ropero',
-        # Nuevos: Equipos de Computación
-        'Compra de servidor rack', 'Adquisición de tarjeta gráfica',
-        'Compra de memoria RAM', 'Compra de procesador intel',
-        'Compra de placa base', 'Adquisición de tablet iPad',
-        'Compra de router inalámbrico', 'Compra de switch de red',
-        # Nuevos: Comidas y Víveres
-        'Compra de mercado para la semana', 'Adquisición de víveres',
-        'Compra de verduras y frutas', 'Pago de cuenta en restaurante',
-        'Compra de comida rápida', 'Compra de snacks y bebidas',
-        'Compra de café y azúcar', 'Compra de desayuno ejecutivo',
-        # Nuevos: Productos para el hogar / Limpieza
-        'Compra de detergente para ropa', 'Adquisición de lavandina y cloro',
-        'Compra de desodorante ambiental', 'Compra de bolsas de basura',
-        'Compra de cera para pisos', 'Compra de esponjas y lavavajillas',
-        # Nuevos: Electrodomésticos
-        'Compra de lavadora de ropa', 'Adquisición de secadora',
-        'Compra de cocina a gas', 'Compra de estufa eléctrica',
-        'Compra de horno eléctrico', 'Compra de aire acondicionado',
-        # Nuevos: Enseres menores
-        'Compra de tostadora', 'Compra de plancha de ropa',
-        'Compra de batidora de mano', 'Compra de cafetera eléctrica',
-        # Nuevos: Útiles de Oficina / Ventas Adicionales
-        'Venta de cuartillas de papel', 'Venta de hojas de cuartilla',
-        'Compra de paquete de cuartilla', 'Adquisición de cuartilla blanca'
-    ],
-    'cuenta_sugerida': [
-        'Gasto - Útiles de Oficina', 'Gasto - Útiles de Oficina', 'Gasto - Útiles de Oficina',
-        'Gasto - Útiles de Oficina', 'Gasto - Útiles de Oficina', 'Gasto - Útiles de Oficina',
-        'Activo Fijo - Equipos Computación', 'Activo Fijo - Equipos Computación', 'Activo Fijo - Equipos Computación',
-        'Activo Fijo - Equipos Computación', 'Activo Fijo - Equipos Computación', 'Activo Fijo - Equipos Computación',
-        'Gasto - Servicios Básicos', 'Gasto - Servicios Básicos', 'Gasto - Servicios Básicos', 'Gasto - Servicios Básicos',
-        'Gasto - Servicios Básicos', 'Gasto - Limpieza y Aseo', 'Gasto - Limpieza y Aseo', 'Gasto - Limpieza y Aseo',
-        'Gasto - Limpieza y Aseo', 'Activo Fijo - Muebles y Enseres', 'Activo Fijo - Muebles y Enseres',
-        'Activo Fijo - Muebles y Enseres', 'Activo Fijo - Muebles y Enseres', 'Activo Fijo - Muebles y Enseres',
-        'Activo - Mercaderías', 'Activo - Mercaderías', 'Activo - Mercaderías',
-        'Gasto - Mantenimiento Vehículos', 'Gasto - Mantenimiento Vehículos', 'Gasto - Mantenimiento Vehículos',
-        'Gasto - Mantenimiento Vehículos', 'Gasto - Honorarios Profesionales', 'Gasto - Honorarios Profesionales',
-        'Gasto - Honorarios Profesionales', 'Gasto - Honorarios Profesionales', 'Gasto - Alimentación Personal',
-        'Gasto - Alimentación Personal', 'Gasto - Alimentación Personal', 'Gasto - Alimentación Personal',
-        'Gasto - Alimentación Personal', 'Gasto - Herramientas', 'Gasto - Herramientas', 'Gasto - Herramientas',
-        'Gasto - Alquileres', 'Gasto - Alquileres', 'Gasto - Alquileres',
-        'Ingreso - Ventas', 'Ingreso - Ventas', 'Ingreso - Servicios', 'Ingreso - Ventas', 'Ingreso - Servicios',
-        'Ingreso - Servicios', 'Gasto - Combustibles', 'Gasto - Combustibles', 'Gasto - Combustibles',
-        'Gasto - Seguros', 'Gasto - Representación', 'Gasto - Comisiones', 'Gasto - Software',
-        'Activo Fijo - Equipos de Imagen', 'Activo Fijo - Equipos de Imagen', 'Activo Fijo - Equipos de Imagen',
-        'Activo Fijo - Equipos de Imagen', 'Activo Fijo - Equipos de Imagen',
-        'Activo Fijo - Electrodomésticos', 'Activo Fijo - Electrodomésticos',
-        'Gasto - Enseres Menores', 'Gasto - Enseres Menores',
-        'Gasto - Servicios Informáticos', 'Gasto - Servicios Informáticos',
-        'Activo Fijo - Equipos Computación', 'Activo Fijo - Equipos Computación',
-        'Gasto - Viáticos', 'Gasto - Viáticos',
-        'Activo Fijo - Equipos Computación', 'Activo Fijo - Equipos Computación',
-        # Nuevos: Hogar / Muebles (4)
-        'Activo Fijo - Muebles y Enseres', 'Activo Fijo - Muebles y Enseres',
-        'Activo Fijo - Muebles y Enseres', 'Activo Fijo - Muebles y Enseres',
-        # Nuevos: Equipos de Computación (8)
-        'Activo Fijo - Equipos Computación', 'Activo Fijo - Equipos Computación',
-        'Activo Fijo - Equipos Computación', 'Activo Fijo - Equipos Computación',
-        'Activo Fijo - Equipos Computación', 'Activo Fijo - Equipos Computación',
-        'Activo Fijo - Equipos Computación', 'Activo Fijo - Equipos Computación',
-        # Nuevos: Comidas y Víveres (8)
-        'Gasto - Alimentación Personal', 'Gasto - Alimentación Personal',
-        'Gasto - Alimentación Personal', 'Gasto - Alimentación Personal',
-        'Gasto - Alimentación Personal', 'Gasto - Alimentación Personal',
-        'Gasto - Alimentación Personal', 'Gasto - Alimentación Personal',
-        # Nuevos: Productos para el hogar / Limpieza (6)
-        'Gasto - Limpieza y Aseo', 'Gasto - Limpieza y Aseo',
-        'Gasto - Limpieza y Aseo', 'Gasto - Limpieza y Aseo',
-        'Gasto - Limpieza y Aseo', 'Gasto - Limpieza y Aseo',
-        # Nuevos: Electrodomésticos (6)
-        'Activo Fijo - Electrodomésticos', 'Activo Fijo - Electrodomésticos',
-        'Activo Fijo - Electrodomésticos', 'Activo Fijo - Electrodomésticos',
-        'Activo Fijo - Electrodomésticos', 'Activo Fijo - Electrodomésticos',
-        # Nuevos: Enseres menores (4)
-        'Gasto - Enseres Menores', 'Gasto - Enseres Menores',
-        'Gasto - Enseres Menores', 'Gasto - Enseres Menores',
-        # Nuevos: Útiles de Oficina / Ventas Adicionales (4)
-        'Ingreso - Ventas', 'Ingreso - Ventas',
-        'Gasto - Útiles de Oficina', 'Gasto - Útiles de Oficina'
-    ]
-}
+import joblib
+import os
+import sys
 
-# Cargar dataset de entrenamiento desde el archivo Excel proporcionado.
-# Si falla la lectura (por ejemplo, si el archivo no existe o está corrupto),
-# se usa como respaldo el dataset embebido en la variable `data`.
+# CARGA DEL MODELO IA PRE-ENTRENADO
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-EXCEL_DATASET = os.path.join(BASE_DIR, "dataset_entrenamiento.xlsx")
+MODEL_FILE = os.path.join(BASE_DIR, 'modelo_ia.pkl')
+METRICS_FILE = os.path.join(BASE_DIR, 'metricas_ia.pkl')
 
-try:
-    df_entrenamiento = pd.read_excel(EXCEL_DATASET)
-    df_entrenamiento.dropna(subset=['descripcion', 'cuenta_sugerida'], inplace=True)
-except Exception:
-    df_entrenamiento = pd.DataFrame(data)
+if not os.path.exists(MODEL_FILE) or not os.path.exists(METRICS_FILE):
+    import tkinter.messagebox as messagebox
+    import tkinter as tk
+    root = tk.Tk()
+    root.withdraw()
+    messagebox.showerror('Error', 'No se encontró el modelo de la Inteligencia Artificial.\\nPor favor, ejecute primero el archivo "entrenador_ia.py" para que el programa pueda estudiar el Excel.')
+    sys.exit(1)
 
-X_train, X_test, y_train, y_test = train_test_split(
-    df_entrenamiento['descripcion'],
-    df_entrenamiento['cuenta_sugerida'],
-    test_size=0.2,
-    random_state=42
-)
-
-# Palabras sin valor para ignorar ("ruido")
-stop_words_es = ['de', 'para', 'el', 'la', 'los', 'las', 'un', 'una', 'en', 'por', 'con', 'a', 'al', 'del', 'y', 'o']
-
-modelo_ia = Pipeline([
-    ('tfidf', TfidfVectorizer(stop_words=stop_words_es)),
-    ('clf', MultinomialNB(alpha=0.2))
-])
-
-# ENTRENAR CON EL 100% PARA NO "OLVIDAR" PALABRAS DEL DATASET
-modelo_ia.fit(df_entrenamiento['descripcion'], df_entrenamiento['cuenta_sugerida'])
+# Cargar el cerebro entrenado
+modelo_ia = joblib.load(MODEL_FILE)
+metricas_ia = joblib.load(METRICS_FILE)
 
 def predecir_cuenta(descripcion):
     probas = modelo_ia.predict_proba([descripcion])[0]
     clase_idx = np.argmax(probas)
     cuenta = modelo_ia.classes_[clase_idx]
     confianza = probas[clase_idx] * 100
+    
+    # Umbral de duda de la Inteligencia Artificial (40%)
+    if confianza < 40.0:
+        cuenta = "Desconocido - Requiere Revisión Humana"
+        
     return cuenta, confianza
 
-# =============================================================================
 # FUNCIONES CONTABLES
-# =============================================================================
 asientos_session = []
 
 def calcular_compra(monto_total, descripcion):
@@ -234,9 +112,7 @@ def exportar_asientos(asientos, filepath, formato='excel'):
         df_export.to_csv(filepath, index=False, encoding='utf-8-sig')
     return True, filepath
 
-# =============================================================================
 # INTERFAZ GRÁFICA (Tkinter)
-# =============================================================================
 class CalculadoraApp:
     def __init__(self, root):
         self.root = root
@@ -481,14 +357,16 @@ class CalculadoraApp:
         frame_info = ttk.LabelFrame(self.tab_metricas, text=" Información de Entrenamiento del Modelo ", padding=20)
         frame_info.pack(fill="x", pady=(0, 20))
         
-        y_pred_test = modelo_ia.predict(X_test)
-        acc = accuracy_score(y_test, y_pred_test)
+        acc = metricas_ia['acc']
+        total_muestras = metricas_ia['total_filas']
+        cuentas_unicas = metricas_ia['cuentas_unicas']
+        muestras_test = metricas_ia['muestras_test']
         
         info_text = (
             f"🎯  IA Entrenada: Naive Bayes (MultinomialNB)\n\n"
-            f"📊  Total de muestras en el dataset (Conocimiento): {len(df_entrenamiento)}\n"
-            f"🗂️  Cuentas contables únicas clasificadas: {len(df_entrenamiento['cuenta_sugerida'].unique())}\n\n"
-            f"🧪  Muestras separadas para validación de examen: {len(X_test)}\n"
+            f"📊  Total de muestras en el dataset (Conocimiento): {total_muestras}\n"
+            f"🗂️  Cuentas contables únicas clasificadas: {cuentas_unicas}\n\n"
+            f"🧪  Muestras separadas para validación de examen: {muestras_test}\n"
             f"⭐  Precisión del Modelo (Accuracy): {acc * 100:.2f}%\n"
         )
         
@@ -507,8 +385,9 @@ class CalculadoraApp:
     def mostrar_grafico(self):
         import matplotlib.pyplot as plt
         
-        y_pred_test = modelo_ia.predict(X_test)
-        acc = accuracy_score(y_test, y_pred_test)
+        acc = metricas_ia['acc']
+        total_muestras = metricas_ia['total_filas']
+        cuentas_unicas = metricas_ia['cuentas_unicas']
         
         plt.figure(figsize=(8, 5))
         bars = plt.bar(['Precisión del Modelo IA'], [acc], color='#4ECDC4', edgecolor='black')
@@ -521,15 +400,14 @@ class CalculadoraApp:
         plt.text(0, acc + 0.03, f"{acc * 100:.2f}%", ha='center', fontweight='bold', fontsize=14, color='#292f36')
         
         # Etiqueta inferior con contexto de los datos
-        plt.figtext(0.1, 0.01, f"Muestras de entrenamiento: {len(df_entrenamiento)}  |  Total Cuentas: {len(df_entrenamiento['cuenta_sugerida'].unique())}", 
+        plt.figtext(0.1, 0.01, f"Muestras de entrenamiento: {total_muestras}  |  Total Cuentas: {cuentas_unicas}", 
                     ha="left", fontsize=9, bbox={"facecolor":"orange", "alpha":0.2, "pad":5})
                     
         plt.tight_layout(rect=[0, 0.05, 1, 1])
         plt.show()
 
 if __name__ == "__main__":
-    y_pred_test = modelo_ia.predict(X_test)
-    acc = accuracy_score(y_test, y_pred_test)
+    acc = metricas_ia['acc']
     print(f"Modelo cargado. Precisión en pruebas: {acc*100:.2f}%")
     
     root = tk.Tk()
