@@ -43,7 +43,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 # Configurar Pipeline IA
 stop_words_es = ['de', 'para', 'el', 'la', 'los', 'las', 'un', 'una', 'en', 'por', 'con', 'a', 'al', 'del', 'y', 'o']
 modelo_ia = Pipeline([
-    ('tfidf', TfidfVectorizer(stop_words=stop_words_es)),
+    ('tfidf', TfidfVectorizer(stop_words=stop_words_es, ngram_range=(1, 2))),
     ('clf', MultinomialNB(alpha=0.2))
 ])
 
