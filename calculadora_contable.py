@@ -117,16 +117,45 @@ class CalculadoraApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Simulador Contable Inteligente - Bolivia")
-        self.root.geometry("800x600")
+        self.root.geometry("900x700")
         self.root.resizable(True, True)  # Ventana redimensionable
-        self.root.configure(bg="#f4f4f9")
+        self.root.configure(bg="#2C3E50")  # Fondo azul oscuro profesional
 
         style = ttk.Style()
         style.theme_use('clam')
-        style.configure('TNotebook.Tab', padding=[15, 5], font=('Arial', 11, 'bold'))
-        style.configure('TLabel', background="#f4f4f9", font=('Arial', 10))
-        style.configure('TButton', font=('Arial', 10, 'bold'), padding=5)
-        style.configure('TRadiobutton', background="#f4f4f9", font=('Arial', 10))
+        
+        # Configuración de colores vivos y profesionales
+        style.configure('TNotebook', background='#34495E', bordercolor='#1ABC9C')
+        style.configure('TNotebook.Tab', padding=[20, 12], font=('Arial', 11, 'bold'), 
+                       background='#3498DB', foreground='white', bordercolor='#2980B9')
+        style.map('TNotebook.Tab', background=[('selected', '#1ABC9C'), ('active', '#2980B9')])
+        
+        style.configure('TLabel', background="#2C3E50", foreground='white', font=('Arial', 10))
+        style.configure('TButton', font=('Arial', 10, 'bold'), padding=8,
+                       background='#3498DB', foreground='white', bordercolor='#2980B9')
+        style.map('TButton', background=[('active', '#2980B9'), ('pressed', '#1ABC9C')])
+        
+        style.configure('TRadiobutton', background="#2C3E50", foreground='white', 
+                       font=('Arial', 10), focuscolor='none')
+        style.configure('TLabelFrame', background="#2C3E50", foreground='#ECF0F1', 
+                       bordercolor='#3498DB', font=('Arial', 11, 'bold'))
+        style.configure('TLabelFrame.Label', background="#2C3E50", foreground='#1ABC9C', 
+                       font=('Arial', 12, 'bold'))
+        
+        # Estilos para Entry (campos de texto)
+        style.configure('TEntry', fieldbackground='#34495E', foreground='white', 
+                       bordercolor='#3498DB', insertcolor='white')
+        style.map('TEntry', fieldbackground=[('focus', '#4A5F7F')])
+        
+        # Estilos para Treeview (tabla)
+        style.configure('Treeview', background='#34495E', foreground='white', 
+                       fieldbackground='#34495E', bordercolor='#3498DB')
+        style.configure('Treeview.Heading', background='#3498DB', foreground='white', 
+                       font=('Arial', 10, 'bold'))
+        style.map('Treeview', background=[('selected', '#1ABC9C')])
+        
+        # Estilo para Frame
+        style.configure('TFrame', background='#2C3E50')
 
         # Notebook (Pestañas)
         self.notebook = ttk.Notebook(root)
@@ -134,8 +163,11 @@ class CalculadoraApp:
 
         # Tabs
         self.tab_registro = ttk.Frame(self.notebook, padding=20)
+        self.tab_registro.configure(style='TFrame')
         self.tab_visor = ttk.Frame(self.notebook, padding=20)
+        self.tab_visor.configure(style='TFrame')
         self.tab_metricas = ttk.Frame(self.notebook, padding=20)
+        self.tab_metricas.configure(style='TFrame')
 
         self.notebook.add(self.tab_registro, text="Registrar Asiento")
         self.notebook.add(self.tab_visor, text="Ver y Exportar Asientos")
@@ -179,16 +211,19 @@ class CalculadoraApp:
         frame_log = ttk.LabelFrame(self.tab_registro, text=" Resultado del Asiento ", padding=10)
         frame_log.pack(expand=True, fill="both")
         
-        self.text_log = tk.Text(frame_log, height=15, state='disabled', font=('Courier New', 10), bg="#1e1e1e", fg="#00ff00")
+        self.text_log = tk.Text(frame_log, height=15, state='disabled', font=('Courier New', 10, 'bold'), 
+                           bg="#0D1117", fg="#58A6FF", insertbackground="#58A6FF", 
+                           selectbackground="#1F6FEB", selectforeground="white")
         self.text_log.pack(expand=True, fill="both")
         
         # Mensaje de bienvenida
-        mensaje_bienvenida = "=== SIMULADOR CONTABLE INTELIGENTE ===\n" \
-                             "Normativa: Ley 843 (Bolivia)\n" \
-                             "IVA: 13% | IT: 3%\n\n" \
-                             "Nota: La clasificación de cuentas depende 100% del dataset.\n" \
-                             "Para que nuevos ítems se clasifiquen correctamente, deben\n" \
-                             "ser agregados al modelo de entrenamiento.\n\n"
+        mensaje_bienvenida = "🤖=== SIMULADOR CONTABLE INTELIGENTE ===🤖\n" \
+                             "📊 Normativa: Ley 843 (Bolivia)\n" \
+                             "💰 IVA: 13% | IT: 3%\n\n" \
+                             "⚠️  Nota: La clasificación de cuentas depende 100% del dataset.\n" \
+                             "📚 Para que nuevos ítems se clasifiquen correctamente, deben\n" \
+                             "    ser agregados al modelo de entrenamiento.\n\n" \
+                             "✨ ¡Listo para registrar tus transacciones! ✨\n\n"
         self.text_log.config(state='normal')
         self.text_log.insert(tk.END, mensaje_bienvenida)
         self.text_log.config(state='disabled')
