@@ -12,37 +12,47 @@ Para correr este proyecto en cualquier computadora local que tenga Python instal
    Asegúrate de tener todos los archivos del proyecto juntos en una misma carpeta (`calculadora_contable.py`, `entrenador_ia.py`, y `dataset_entrenamiento.xlsx`).
 
 2. **Crear y activar un entorno virtual (VENV):**  
-   Este paso es crucial para aislar el proyecto y evitar conflictos de librerías en tu equipo.
+   Este paso es crucial para aislar el proyecto y evitar conflictos de librerías en tu equipo. Abre una terminal (como PowerShell o CMD) dentro de la carpeta del proyecto y ejecuta:
+
+   **🟦 Para usuarios de Windows (Recomendado):**
+
+   ```powershell
+   # 1. Crear el entorno virtual
+   python -m venv venv
+
+   # 2. Activar el entorno virtual
+   # (Nota: si te da error de permisos, ejecuta tu editor de código o PowerShell como administrador)
+   .\venv\Scripts\Activate
+   ```
+
+   **🟧 Para usuarios de Linux / Mac:**
 
    ```bash
-   # En terminal (Linux/Mac)
    python3 -m venv venv
    source venv/bin/activate
-
-   # En terminal (Windows PowerShell)
-   python -m venv venv
-   .\venv\Scripts\Activate
    ```
 
 3. **Instalar Dependencias Requeridas:**
 
-   ```bash
-   pip install pandas scikit-learn numpy openpyxl matplotlib
+   Este repositorio cuenta con un archivo estandarizado con las versiones compatibles que necesita la Inteligencia Artificial. Instálalas corriendo (asegúrate de que en tu terminal se vea un `(venv)` a la izquierda antes de ejecutar esto):
+
+   ```cmd
+   pip install -r requirements.txt
    ```
 
 4. **Ejecución de la Aplicación (Usuario Final):**
-   Abre la interfaz principal del sistema ejecutando:
+   Una vez instalado todo, para abrir la interfaz gráfica principal con la IA congelada y lista para clasificar asientos, solo debes ejecutar:
 
-   ```bash
+   ```cmd
    python calculadora_contable.py
    ```
 
 5. **Re-entrenamiento de la IA (Modo Desarrollador):**
-   Si agregaste nuevas filas de conocimiento al archivo Excel (`dataset_entrenamiento.xlsx`), debes compilar el nuevo cerebro ejecutando:
-   ```bash
+   Si agregaste nuevas filas de conocimiento al archivo Excel (`dataset_entrenamiento.xlsx`), debes compilar temporalmente un nuevo cerebro antes de usar el programa. Hazlo ejecutando:
+   ```cmd
    python entrenador_ia.py
    ```
-   _Esto generará un nuevo archivo protegido `modelo_ia.pkl` listo para usarse._
+   _Esto compilará y generará un nuevo archivo protegido (`modelo_ia.pkl`), tras lo cual podrás volver al paso 4 normal._
 
 ---
 
